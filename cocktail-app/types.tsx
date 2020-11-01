@@ -47,7 +47,7 @@ export namespace DetailRecipeComponent {
 
 export namespace CreateRecipeComponent {
   export interface Props {
-
+    authentication: any
   }
   export interface State {
     newRecipe: CocktailRecipe
@@ -89,7 +89,7 @@ export type UserLoginResponse = {
 
 export type CocktailRecipe = {
   desc: string
-  id: string
+  id?: string
   imageUrl?: string[]
   ingredients?: Ingredients[]
   likes?: number
