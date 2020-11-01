@@ -7,7 +7,7 @@ import {
 import { CocktailRecipe } from "../types";
 import RecipeItem from "./RecipeItem";
 
-export default function RecipeList({ recipes }: { recipes: CocktailRecipe[] }) {
+export default function RecipeList({ recipes , navigation}: { recipes: CocktailRecipe[] , navigation : any}) {
     let recipeSectionList: SectionListData<CocktailRecipe>[] = [];
     if (Array.isArray(recipes)) {
         recipeSectionList = recipes.map(recipe => {
@@ -23,7 +23,7 @@ export default function RecipeList({ recipes }: { recipes: CocktailRecipe[] }) {
             <SectionList<CocktailRecipe>
                 sections={recipeSectionList}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => <RecipeItem recipeDetails={item} />}
+                renderItem={({ item }) => <RecipeItem recipeDetails={item} navigation={navigation}/>}
                 /* renderSectionHeader={({ section: { title } }) => (
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>{title}</Text>

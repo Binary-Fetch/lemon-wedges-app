@@ -14,6 +14,11 @@ export default {
           SignIn: 'signin'
         }
       },
+      DetailRecipe: {
+        screens: {
+          DetailRecipe: 'detailrecipe',
+        },
+      },
       Root: {
         screens: {
           HomeScreen: {

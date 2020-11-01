@@ -4,6 +4,7 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 import { connect } from 'react-redux';
 import ResourceLoader from '../components/ResourceLoader';
+import DetailRecipeScreen from '../screens/DetailsRecipeScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SignInScreen from '../screens/SignInScreen';
 import { RootStackParamList } from '../types';
@@ -55,7 +56,10 @@ function RootNavigator({authState}: {authState: any}) {
             />
           ) : (
             // User is signed in
+            <>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="DetailRecipe" component={DetailRecipeScreen} />
+            </>
           )}
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>

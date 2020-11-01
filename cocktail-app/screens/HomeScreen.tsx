@@ -37,8 +37,8 @@ export default class HomeScreen extends React.Component<HomeComponent.props, Hom
     const {isLoading, coctailRecipeList} = this.state;
     return (
       <View style={styles.container}>
-        {isLoading && <ResourceLoader isLoading={isLoading} /> }
-        {!isLoading &&  <RecipeList recipes={coctailRecipeList} />}
+        {isLoading && <ResourceLoader /> }
+        {!isLoading &&  <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation} />}
       </View>
     );
   }

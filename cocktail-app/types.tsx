@@ -2,7 +2,8 @@ export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
   LoginSplash: undefined,
-  SignIn: undefined
+  SignIn: undefined,
+  DetailRecipe: undefined
 };
 
 export type BottomTabParamList = {
@@ -24,11 +25,22 @@ export type UploadRecipeParamList = {
 
 export namespace HomeComponent {
   export interface props {
-
+    navigation : any
   }
   export interface state {
     isLoading: boolean, 
     coctailRecipeList: CocktailRecipe[]
+  }
+}
+
+export namespace DetailRecipeComponent {
+  export interface Props {
+
+  }
+  export interface State {
+    isLoading: boolean,
+    user: User,
+    coctailRecipe: CocktailRecipe
   }
 }
 
@@ -46,7 +58,7 @@ export type MyCocktailRecipesResponse = {
 }
 export namespace MyRecipeComponent {
   export interface props {
-
+    navigation: any
   }
   export interface state {
     isLoading: boolean,
@@ -82,6 +94,7 @@ export type CocktailRecipe = {
   likes?: number
   name: string
   prepareSteps?: PreparationStep[]
+  owner: User
 }
 
 export type Ingredients = {
