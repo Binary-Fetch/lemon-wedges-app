@@ -1,40 +1,25 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import RecipeItem from '../components/RecipeItem';
-import { View } from '../components/Themed';
+import { View , Text} from '../components/Themed';
 import { DetailRecipeComponent } from '../types';
 
 export default class DetailRecipeScreen extends React.Component<DetailRecipeComponent.Props, DetailRecipeComponent.State> {
     constructor(props: DetailRecipeComponent.Props) {
         super(props);
-
-        this.state = {
-            isLoading: false,
-            user: {
-                username:"",
-                name:"",
-                token:""
-            },
-            coctailRecipe: {
-                id: "",
-                name: "Martini",
-                desc: " Martini",
-                owner: {
-                    username:"",
-                    name: "",
-                    token: ""
-                }
-                
-            }
-        };
+        
+        
+        
     }
 
 
 
+
     render() {
-       
+        const { recipeDetails }= this.props.route.params;
         return (
             <View style={styles.container}>
+                <Text>{recipeDetails.name}</Text>
                {/* <RecipeItem recipeDetails={this.state.coctailRecipe}></RecipeItem> */}
             </View>
         );

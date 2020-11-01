@@ -25,7 +25,7 @@ module.exports = {
         console.log("User not in database.");
       }
     },
-    getUser: (_, { username, first, offset }, { dataSources, email }) => {
+    getUser: (_, {  first, offset }, { dataSources, email , username}) => {
       if (!email) {
         throw new AuthenticationError('Unauthorized access!');
       }

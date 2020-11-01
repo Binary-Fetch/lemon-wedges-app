@@ -8,8 +8,8 @@ import Config from '../constants/Config';
 export default function RecipesService() {
 
     const GET_MY_RECIPES = gql`
-query getUserRecipes ($username:String!){
-    getUser(username:$username) {
+query getUserRecipes (){
+    getUser() {
         name
         username
         email
@@ -96,11 +96,10 @@ query getUserRecipes ($username:String!){
             resolve('Success');
         });
     }
-    const getMyRecipes = async (username: string) => {
+    const getMyRecipes = async () => {
         const client = await getClient();
         return await client.query<MyCocktailRecipesResponse>({
-            query: GET_MY_RECIPES,
-            variables: { username: username }
+            query: GET_MY_RECIPES
         });
     }
 

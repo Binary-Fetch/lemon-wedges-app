@@ -35,7 +35,8 @@ export namespace HomeComponent {
 
 export namespace DetailRecipeComponent {
   export interface Props {
-
+  route: any,
+  navigation: any
   }
   export interface State {
     isLoading: boolean,

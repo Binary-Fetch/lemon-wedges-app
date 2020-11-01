@@ -7,7 +7,7 @@ export default function RecipeItem({ recipeDetails , navigation}: { recipeDetail
     return (
         <View style={styles.container}>
             <Item imageUri={recipeDetails.imageUrl} navigation={navigation} />
-            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe')}>{recipeDetails.name}</Text>
+            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe',{recipeDetails})}>{recipeDetails.name}</Text>
     
             <Text style={styles.description}>In a highball glass almost filled with ice cubes, combine the gin and ginger ale.</Text>
         </View>

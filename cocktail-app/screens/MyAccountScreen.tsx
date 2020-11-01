@@ -27,7 +27,7 @@ export default class MyRecipieScreen extends React.Component<MyRecipeComponent.p
   async componentDidMount() {
     this.setState({isLoading: true});
     try{
-      const reciepes = await RecipesService().getMyRecipes('sday');
+      const reciepes = await RecipesService().getMyRecipes();
       if(reciepes && reciepes.data ) {
         this.setState({coctailRecipeList: reciepes.data.getUser.recipes, user:{
           name: reciepes.data.getUser.name,
