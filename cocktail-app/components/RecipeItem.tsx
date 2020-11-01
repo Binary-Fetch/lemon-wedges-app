@@ -1,23 +1,23 @@
 import React from "react";
-import { StyleSheet, Image, Button } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { CocktailRecipe } from "../types";
 import { View, Text } from "./Themed";
 
 export default function RecipeItem({ recipeDetails , navigation}: { recipeDetails: CocktailRecipe, navigation:any }) {
     return (
         <View style={styles.container}>
-            <Item imageUri={recipeDetails.imageUrl}/>
-            <Text style={styles.title}>{recipeDetails.name}</Text>
-            <Button title="more" onPress={e=> navigation.navigate('DetailRecipe')}></Button>
+            <Item imageUri={recipeDetails.imageUrl} navigation={navigation} />
+            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe')}>{recipeDetails.name}</Text>
+    
             <Text style={styles.description}>In a highball glass almost filled with ice cubes, combine the gin and ginger ale.</Text>
         </View>
     );
 }
 
-const Item = ({ imageUri }: { imageUri: string[] | undefined }) => {
+const Item = ({ imageUri,navigation }: { imageUri: string[] | undefined , navigation:any}) => {
     return (
         <View style={styles.imageItem}>
-            {imageUri && imageUri[0] && <Image source={{ uri: imageUri[0] }} style={styles.image} />}
+            {imageUri && imageUri[0] && <Image  source={{ uri: imageUri[0] }} style={styles.image} />}
             {!imageUri || (imageUri && !imageUri[0]) && <Text style={styles.title}>No Image Exists</Text>}
         </View>
     );
