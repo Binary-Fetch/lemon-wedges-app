@@ -49,7 +49,7 @@ export default class MyRecipieScreen extends React.Component<MyRecipeComponent.p
     return (
       <View style={styles.container}>
         {isLoading && <ResourceLoader  /> }
-        {!isLoading  && <RecipeList recipes={coctailRecipeList} />}
+        {!isLoading  && <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation}/>}
       </View>
     );
   }
