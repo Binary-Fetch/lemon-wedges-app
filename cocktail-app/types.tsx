@@ -41,6 +41,20 @@ export namespace CreateRecipeComponent {
     creationMessage: string
   }
 }
+export type MyCocktailRecipesResponse = {
+  getUser: any
+}
+export namespace MyRecipeComponent {
+  export interface props {
+
+  }
+  export interface state {
+    isLoading: boolean,
+    user: User,
+    coctailRecipeList: CocktailRecipe[]
+  }
+}
+
 
 export type CocktailRecipeResponse = {
   coctailRecipe: CocktailRecipe[]
