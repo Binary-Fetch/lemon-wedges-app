@@ -62,9 +62,9 @@ class UserAPI extends GraphQLDataSource {
 
   async getUsers(username, first, offset) {
     try {
-      const user = this.context ?
-        this.context.username : 'Username ID Not FOund';
-      console.log("User found from token ==>", user);
+      // const user = this.context ?
+      //   this.context.username : 'Username ID Not FOund';
+      // console.log("User found from token ==>", user);
       const response = await this.query(GET_USER_DETAILS, {
         variables: {
           username: username,
