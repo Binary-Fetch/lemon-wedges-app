@@ -35,7 +35,7 @@ export default class DetailRecipeScreen extends React.Component<DetailRecipeComp
        
         return (
             <View style={styles.container}>
-               <RecipeItem recipeDetails={this.state.coctailRecipe}></RecipeItem>
+               {/* <RecipeItem recipeDetails={this.state.coctailRecipe}></RecipeItem> */}
             </View>
         );
     }
