@@ -1,18 +1,5 @@
 # cocktail-api
 
-Find below the command to build and run (Local Environment):
-
-- npm install
-- npm run server
-
-If you are creating a new DB,
-RUN the following comand to add 20 Dummy users to the DB:
-
-- npm run add:users
-
-Dummy users data is present in the dataModel/MOCK_DATA_USER.json,
-You can also ad your custom data there. User API file is used to Upload the Data to the Cloud DB.
-
 ## Sample Quary
 
 - Fetch all cocktail recipe
