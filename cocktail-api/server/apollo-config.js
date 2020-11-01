@@ -2,13 +2,9 @@ const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const jwt = require("jsonwebtoken")
-const { createStore } = require('./utils')
 
 const UserAPI = require('./datasources/user');
 const CocktailAPI = require('./datasources/cocktail');
-
-const store = createStore()
-
 
 const apolloServer = new ApolloServer({
     context: async ({ req }) => {
@@ -39,7 +35,7 @@ const apolloServer = new ApolloServer({
     resolvers,
     dataSources: () => ({
         cocktailAPI: new CocktailAPI(),
-        userAPI: new UserAPI({ store })
+        userAPI: new UserAPI()
     })
 });
 
