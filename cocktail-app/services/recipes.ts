@@ -9,7 +9,7 @@ export default function RecipesService() {
 
     const GET_MY_RECIPES = gql`
 query getUserRecipes (){
-    getUser() {
+    getUser{
         name
         username
         email
