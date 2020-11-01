@@ -20,15 +20,15 @@ const apolloServer = new ApolloServer({
             token = getToken()
         }
         if (token !== "") {
-            // Config for check token
-            // username = jwt.verify(token, "secret_key").username
-            // console.log(username)
-            // email = jwt.verify(token, "secret_key").email
-            // let user = {
-            //     username: username,
-            //     email: email
-            // }
-            // return user;
+            //Config for check token
+            username = jwt.verify(token, "secret_key").username
+            console.log(username)
+            email = jwt.verify(token, "secret_key").email
+            let user = {
+                username: username,
+                email: email
+            }
+            return user;
         }
     },
     typeDefs,

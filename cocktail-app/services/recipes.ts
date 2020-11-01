@@ -8,14 +8,14 @@ import Config from '../constants/Config';
 export default function RecipesService() {
     const getRecipes = async () => {
         const token = await AsyncStorage.getItem(Config.storageKeyForAuth);
-        if(!token) {
+        if (!token) {
             throw new Error('Required auth token missing, please login');
         }
         const client = new ApolloClient({
             uri: AppConfiguration.GQLBackendUrl,
             cache: new InMemoryCache(),
             headers: {
-                authorization: token
+                authorization: "Bearer " + token
             }
         });
         return await client.query<CocktailRecipeResponse>({

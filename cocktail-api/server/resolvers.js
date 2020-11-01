@@ -25,16 +25,18 @@ module.exports = {
         console.log("User not in database.");
       }
     },
-    // getUser: (_, { username, first, offset }, { dataSources, email }) => {
-    //   if (!email) {
-    //     throw new AuthenticationError('Unauthorized access!');
-    //   }
-    //   return dataSources.userAPI.getUsers(username, first, offset)
-    // },
-    getUser: (_, { username, first, offset }, { dataSources }) =>
-      dataSources.userAPI.getUsers(username, first, offset),
-    coctailRecipe: (_, { first, offset }, { dataSources }) =>
-      dataSources.cocktailAPI.getCocktailDetails(first, offset),
+    getUser: (_, { username, first, offset }, { dataSources, email }) => {
+      if (!email) {
+        throw new AuthenticationError('Unauthorized access!');
+      }
+      return dataSources.userAPI.getUsers(username, first, offset)
+    },
+    coctailRecipe: (_, { first, offset }, { dataSources, email }) => {
+      if (!email) {
+        throw new AuthenticationError('Unauthorized access!');
+      }
+      return dataSources.cocktailAPI.getCocktailDetails(first, offset);
+    },
   },
   Mutation: {
     saveUser: async (_, { user }, { dataSources }) => {
