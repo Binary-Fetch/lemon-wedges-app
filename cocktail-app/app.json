@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "react-native-app",
-    "slug": "react-native-app",
+    "name": "lemon-wedges-app",
+    "slug": "lemon-wedges-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/lemon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -23,6 +23,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "Explore a fascinating world of bartending in a new way.\nLearn what ingredients you need and how to mix your favorite manhattans, \nsours, mojitos, and thousands of other cocktails.\nMobile app to explore these recipes and also submit your own and share them with your friends.",
+    "githubUrl": "https://github.com/Binary-Fetch/lemon-wedges-app"
   }
 }
