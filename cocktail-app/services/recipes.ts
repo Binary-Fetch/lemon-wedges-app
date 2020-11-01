@@ -8,7 +8,7 @@ import Config from '../constants/Config';
 export default function RecipesService() {
 
     const GET_MY_RECIPES = gql`
-query getUserRecipes (){
+query getUserRecipes{
     getUser{
         name
         username
@@ -92,8 +92,17 @@ query getUserRecipes (){
         });
     }
     const createRecipe = async (recipe: CocktailRecipe) => {
-        return new Promise<string>((resolve, reject) => {
-            resolve('Success');
+        const client = await getClient();
+        return await client.mutate<any>({
+            mutation: gql`
+            mutation saveRecipe($recipe: RecipeInput){
+                saveRecipe(recipe: $recipe){
+                  success
+                  message
+                }
+              }
+            `,
+            variables: { recipe: recipe }
         });
     }
     const getMyRecipes = async () => {
