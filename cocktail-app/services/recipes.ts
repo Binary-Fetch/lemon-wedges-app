@@ -8,7 +8,7 @@ import Config from '../constants/Config';
 export default function RecipesService() {
 
     const GET_MY_RECIPES = gql`
-query getUserRecipes (){
+query getUserRecipes {
     getUser{
         name
         username
