@@ -9,7 +9,7 @@ export default function RecipeItem({ recipeDetails , navigation}: { recipeDetail
             <Item imageUri={recipeDetails.imageUrl} navigation={navigation} />
             <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe',{recipeDetails})}>{recipeDetails.name}</Text>
     
-            <Text style={styles.description}>In a highball glass almost filled with ice cubes, combine the gin and ginger ale.</Text>
+    {/* <Text style={styles.description}>{recipeDetails.owner.username}</Text> */}
         </View>
     );
 }

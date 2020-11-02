@@ -38,8 +38,8 @@ export default function BottomTabNavigator() {
         name="MyAccount"
         component={TabTwoNavigator}
         options={{
-          tabBarLabel: "My Account",
-          tabBarIcon: ({ color }: {color: string} ) => <TabBarIcon name="ios-person" color={color} />,
+          tabBarLabel: "My Recipe",
+          tabBarIcon: ({ color }: {color: string} ) => <TabBarIcon name="ios-list" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -80,7 +80,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="MyAccount"
         component={MyAccountScreen}
-        options={{ headerTitle: 'My Account' }}
+        options={{ headerTitle: 'My Recipe' }}
       />
     </TabTwoStack.Navigator>
   );
