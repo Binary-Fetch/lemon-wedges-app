@@ -18,3 +18,9 @@ To view the development mode scan the QR code using expo app QR scaner.
 The Lemon Wedges App  will load in you phone.
 
 **Note**: The server machine and phone need to be in same network.
+
+## Sample User Details
+- username: adutt, password: Test123
+- username: kbiswas, password: Test123
+**Note**: Currently password verification is not available. Authentication is done using valid username. It will be available in future release.
+
