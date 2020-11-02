@@ -53,8 +53,8 @@ class CocktailAPI extends GraphQLDataSource {
     try {
       const response = await this.query(COCKTAIL_DETAILS, {
         variables: {
-          first: first,
-          offset: offset,
+          first: 50,
+          offset: 0,
         },
       });
       return response.data.queryCoctailRecipe;
