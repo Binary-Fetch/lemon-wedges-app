@@ -8,12 +8,11 @@ import GenericUtils from '../utils/GenericUtil';
 import { Formik } from 'formik';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as Yup from 'yup';
 
 class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, CreateRecipeComponent.State> {
     constructor(props: CreateRecipeComponent.Props) {
         super(props);
-        console.log('Test')
-
         // this.state = {
         //     newRecipe: this.createFreshState(),
         //     creationMessage: ''
@@ -58,20 +57,30 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
     // }
 
     render() {
-        const { userDetails } = this.props.authentication;
+        const { authentication, navigation } = this.props; 
+        const CreateRecipeValidationSchema = Yup.object().shape({
+            name: Yup.string()
+                .required('Required'),
+            desc: Yup.string()
+                .required('Required'),
+            imageUrl: Yup.string()
+                .required('Required')
+        });
         return (
             <ThemeProvider>
                 <Formik
                     initialValues={{ name: '', desc: '', imageUrl: '' }}
-                    onSubmit={values => {
+                    validationSchema={CreateRecipeValidationSchema}
+                    onSubmit={ async values => {
                         console.log(values);
                         let finalValue: any = values;
                         finalValue.imageUrl = [values.imageUrl];
-                        finalValue.owner = { username: userDetails.username };
-                        const createCocktail = RecipesService().createRecipe(finalValue);
+                        finalValue.owner = { username: authentication.userDetails.username };
+                        const createCocktail = await RecipesService().createRecipe(finalValue);
+                        navigation.navigate("HomeScreen");
                     }}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    {({ handleChange, handleBlur, handleSubmit, values,  errors, touched  }) => (
                         <View style={styles.container}>
                             <Text style={styles.formLabel}>Add Recipe</Text>
                             <TextInput
@@ -81,6 +90,9 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                 value={values.name}
                                 style={styles.inputStyle}
                             />
+                            {errors.name && touched.name ? (
+                                <Text style={{ color: "#f00" }}>{errors.name}</Text>
+                            ) : null}
                             <TextInput
                                 placeholder="Description"
                                 onChangeText={handleChange('desc')}
@@ -89,6 +101,9 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                 multiline={true}
                                 style={styles.inputStyle}
                             />
+                            {errors.desc && touched.desc ? (
+                                <Text style={{ color: "#f00" }}>{errors.desc}</Text>
+                            ) : null}
                             <TextInput
                                 placeholder="Image Url"
                                 onChangeText={handleChange('imageUrl')}
@@ -97,6 +112,9 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                 multiline={true}
                                 style={styles.inputStyle}
                             />
+                            {errors.imageUrl && touched.imageUrl ? (
+                                <Text style={{ color: "#f00" }}>{errors.imageUrl}</Text>
+                            ) : null}
                             <ThemedButton title="Submit" onPress={(e: any) => handleSubmit(e)} />
                             {/* <Button onPress={handleSubmit} title="Submit" /> */}
                         </View>

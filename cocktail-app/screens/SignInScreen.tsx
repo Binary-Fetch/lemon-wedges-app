@@ -3,27 +3,18 @@ import * as React from 'react';
 import { Button, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-//import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import * as Yup from 'yup';
-/* import useAuthenticationContext from '../hooks/useAuthenticationContext';
-import useAuthenticationReducer from '../hooks/useAuthenticationReducer';
-import { AppRoot, RootStackParamList } from '../types'; */
-import { authSingIn } from '../actions/auth.action';
+import { authRestore, authSingIn } from '../actions/auth.action';
 import { Text, View } from "../components/Themed";
+import { useFocusEffect } from '@react-navigation/native';
 
 function SignInScreen({
-  navigation, authentication, doAuthSingIn
+  navigation, authentication, doAuthSingIn, checkLogin
 }: any) {
-  //const AuthContext = React.createContext<AppRoot.AppAuthContext|any>({});
-  //const {signIn} = useAuthenticationContext();
-  //const [state, dispatch] = useAuthenticationReducer();
-  /* return (
-      <View style={styles.container}>
-         <Text>{authentication.userToken}</Text>
-          <Text>Test</Text>
-          <Button title="Sign In" onPress={(e) => doAuthSingIn('test-token')} />   
-      </View>
-  ); */
+  useFocusEffect(React.useCallback(() => {
+    checkLogin();
+  }, []));
+  
   const LoginFormSchema = Yup.object().shape({
     username: Yup.string()
       .min(1, 'Too Short!')
@@ -32,6 +23,7 @@ function SignInScreen({
     password: Yup.string()
       .required('Required'),
   });
+  
   return (
     <Formik
       initialValues={{ username: '', password: '' }}
@@ -73,17 +65,6 @@ function SignInScreen({
           <Button title="Submit" onPress={(e: any) => handleSubmit(e)} />
         </View>
       )}
-      {/* <TextInput
-                        placeholder="Name" onChange={(e) => this.handleChange(e, 'name')}
-                        value={newRecipe.name} style={styles.inputStyle}
-                    />
-                    <TextInput
-                        placeholder="Description" onChange={(e) => this.handleChange(e, 'desc')} value={newRecipe.desc}
-                        multiline={true} style={styles.inputStyle}
-                    /> 
-                    <View style={{ marginTop: 150, width: 100 }}>
-                        
-                    </View>*/}
     </Formik>
   );
 
@@ -96,7 +77,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
 const mapDispatchToProps = (dispatch: any) => (
   bindActionCreators({
-    doAuthSingIn: authSingIn
+    doAuthSingIn: authSingIn,
+    checkLogin: authRestore
   }, dispatch)
 )
 

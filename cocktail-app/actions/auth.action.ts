@@ -16,7 +16,6 @@ export const authSingOut = () => ({
     type: ActionTypes.SIGN_OUT,
 });
 
-export const authRestore = (userToken: string) => ({
-    type: ActionTypes.RESTORE_TOKEN,
-    userToken
+export const authRestore = () => ({
+    type: ActionTypes.RESTORE_TOKEN
 });

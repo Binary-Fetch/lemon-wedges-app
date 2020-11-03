@@ -47,7 +47,8 @@ export namespace DetailRecipeComponent {
 
 export namespace CreateRecipeComponent {
   export interface Props {
-    authentication: any
+    authentication: any,
+    navigation: any
   }
   export interface State {
     newRecipe: CocktailRecipe

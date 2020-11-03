@@ -11,7 +11,7 @@ const authenticationReducer = (state: any = initialState, action: any) => {
         case ActionTypes.RESTORE_TOKEN:
             return {
                 ...state,
-                isLoading: false,
+                isLoading: true,
                 userToken: action.userToken,
                 userDetails: action.userDetails
             };

@@ -9,6 +9,7 @@ import { HomeComponent } from '../types';
 
 
 export default class HomeScreen extends React.Component<HomeComponent.props, HomeComponent.state> {
+  private detachNavigationSubscription: any;
   constructor(props:HomeComponent.props) {
     super(props);
 
@@ -19,18 +20,24 @@ export default class HomeScreen extends React.Component<HomeComponent.props, Hom
   }
 
   async componentDidMount() {
-    this.setState({isLoading: true});
-    try{
-      const reciepes = await RecipesService().getRecipes();
-      if(reciepes && reciepes.data ) {
-        this.setState({coctailRecipeList: reciepes.data.coctailRecipe})
+    this.detachNavigationSubscription = this.props.navigation.addListener('focus', async () => {
+      this.setState({ isLoading: true });
+      try {
+        const reciepes = await RecipesService().getRecipes();
+        if (reciepes && reciepes.data) {
+          this.setState({ coctailRecipeList: reciepes.data.coctailRecipe })
+        }
+      } catch (ex) {
+        console.log(ex.message)
       }
-    }catch(ex) {
-      console.log(ex.message)
-    }
-    finally{
-      setTimeout(() => this.setState({isLoading: false}));
-    }
+      finally {
+        setTimeout(() => this.setState({ isLoading: false }));
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.detachNavigationSubscription();
   }
 
   render() {
