@@ -31,7 +31,7 @@ function* checkExistingAuthSession() {
         const userToken = yield AsyncStorage.getItem(Config.storageKeyForAuth);
         const userDetails = yield AsyncStorage.getItem(Config.storageKeyForUserDetails);
         if(userToken && userDetails) {
-            yield(put({type: ActionTypes.SIGN_IN, userDetails, userToken: JSON.parse(userDetails)})); 
+            yield(put({type: ActionTypes.SIGN_IN, userDetails: JSON.parse(userDetails), userToken}));
         }else{
             yield(put({type: ActionTypes.SIGN_OUT}));
         }

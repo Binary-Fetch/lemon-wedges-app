@@ -17,6 +17,10 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
         //     newRecipe: this.createFreshState(),
         //     creationMessage: ''
         // };
+        this.state = {
+            submissionInProg: false,
+            creationMessage: ' '
+        }
     }
 
     // handleChange(evt: any, property: string) {
@@ -57,6 +61,7 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
     // }
 
     render() {
+        const {submissionInProg, creationMessage } = this.state;
         const { authentication, navigation } = this.props; 
         const CreateRecipeValidationSchema = Yup.object().shape({
             name: Yup.string()
@@ -66,21 +71,31 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
             imageUrl: Yup.string()
                 .required('Required')
         });
+        let addButtonName = "Submit";
         return (
             <ThemeProvider>
                 <Formik
                     initialValues={{ name: '', desc: '', imageUrl: '' }}
                     validationSchema={CreateRecipeValidationSchema}
                     onSubmit={ async values => {
-                        console.log(values);
-                        let finalValue: any = values;
-                        finalValue.imageUrl = [values.imageUrl];
-                        finalValue.owner = { username: authentication.userDetails.username };
-                        const createCocktail = await RecipesService().createRecipe(finalValue);
-                        navigation.navigate("HomeScreen");
+                        try {
+                            //console.log(values);
+                            let finalValue: any = {...values};
+                            finalValue.imageUrl = [values.imageUrl];
+                            finalValue.owner = { username: authentication.userDetails.username };
+                            this.setState({submissionInProg: true});
+                            const createCocktail = await RecipesService().createRecipe(finalValue);
+                            navigation.navigate("HomeScreen"); 
+                        }catch(ex) {
+                            this.setState({creationMessage: ex.message});
+                        } finally{
+                            this.setState({submissionInProg: false});
+                        }
+                        
                     }}
                 >
                     {({ handleChange, handleBlur, handleSubmit, values,  errors, touched  }) => (
+                        <>
                         <View style={styles.container}>
                             <Text style={styles.formLabel}>Add Recipe</Text>
                             <TextInput
@@ -115,9 +130,14 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                             {errors.imageUrl && touched.imageUrl ? (
                                 <Text style={{ color: "#f00" }}>{errors.imageUrl}</Text>
                             ) : null}
-                            <ThemedButton title="Submit" onPress={(e: any) => handleSubmit(e)} />
+                            <ThemedButton style={{margin: 5}} title={submissionInProg ? 'Adding...' : 'Submit'} disabled={submissionInProg} onPress={(e: any) => handleSubmit(e)} />
                             {/* <Button onPress={handleSubmit} title="Submit" /> */}
+                            {creationMessage && 
+                                <Text style={{color: '#f00'}}>{creationMessage}</Text>
+                            }
                         </View>
+                        
+                        </>
                     )}
                     {/* <TextInput
                         placeholder="Name" onChange={(e) => this.handleChange(e, 'name')}

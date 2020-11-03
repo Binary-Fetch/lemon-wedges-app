@@ -51,8 +51,9 @@ export namespace CreateRecipeComponent {
     navigation: any
   }
   export interface State {
-    newRecipe: CocktailRecipe
-    creationMessage: string
+    newRecipe?: CocktailRecipe
+    creationMessage?: string
+    submissionInProg: boolean
   }
 }
 export type MyCocktailRecipesResponse = {
