@@ -12,7 +12,9 @@ function SignInScreen({
   navigation, authentication, doAuthSingIn, checkLogin
 }: any) {
   useFocusEffect(React.useCallback(() => {
-    checkLogin();
+    if(!authentication.isSignout) {
+      checkLogin();
+    }
   }, []));
   
   const LoginFormSchema = Yup.object().shape({

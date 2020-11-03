@@ -28,6 +28,7 @@ const authenticationReducer = (state: any = initialState, action: any) => {
                 ...state,
                 isSignout: true,
                 userToken: null,
+                isLoading: false
             };
         case ActionTypes.AUTH_LOADING_START:
             return {
