@@ -1,6 +1,6 @@
 
 import { gql } from '@apollo/client';
-import { CocktailRecipe, CocktailRecipeResponse, MyCocktailRecipesResponse } from '../types';
+import { CocktailRecipe, CocktailRecipeResponse, MyCocktailRecipesResponse, UserRegistrationRequest } from '../types';
 import getApolloGQLClient from './apollo-gql-client-config';
 
 export default function RecipesService() {
@@ -86,6 +86,20 @@ export default function RecipesService() {
             variables: { recipe: recipe }
         });
     }
+    const createUser = async (user: UserRegistrationRequest) => {
+        const client = await getApolloGQLClient(false);
+        return await client.mutate<any>({
+            mutation: gql`
+            mutation saveUser($user: UserInput){
+                saveUser(user: $user){
+                  success
+                  message
+                }
+              }
+            `,
+            variables: { user: user }
+        });
+    }
     const getMyRecipes = async () => {
         const client = await getApolloGQLClient();
         return await client.query<MyCocktailRecipesResponse>({
@@ -96,6 +110,7 @@ export default function RecipesService() {
     return {
         getRecipes,
         createRecipe,
-        getMyRecipes
+        getMyRecipes,
+        createUser
     }
 }

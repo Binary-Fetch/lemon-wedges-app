@@ -7,6 +7,7 @@ import ResourceLoader from '../components/ResourceLoader';
 import DetailRecipeScreen from '../screens/DetailsRecipeScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import SignInScreen from '../screens/SignInScreen';
+import UserRegistrationScreen from '../screens/UserRegistrationScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -45,6 +46,7 @@ function RootNavigator({authState}: {authState: any}) {
             <Stack.Screen name="LoginSplash" component={ResourceLoader} />
           ) : authState.userToken == null ? (
             // No token found, user isn't signed in
+            <>
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
@@ -54,6 +56,8 @@ function RootNavigator({authState}: {authState: any}) {
                 animationTypeForReplace: authState.isSignout ? 'pop' : 'push',
               }}
             />
+            <Stack.Screen name="UserRegistration" component={UserRegistrationScreen} />
+            </>
           ) : (
             // User is signed in
             <>

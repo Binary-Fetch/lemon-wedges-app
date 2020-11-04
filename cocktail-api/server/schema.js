@@ -38,9 +38,10 @@ const typeDefs = gql`
 
   input UserInput {
     username: String!
-    email: String
-    name: String
-    gender: String
+    password: String!
+    email: String!
+    name: String!
+    gender: String!
     active: UserStatus
   }
 

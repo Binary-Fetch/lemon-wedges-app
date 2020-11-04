@@ -3,6 +3,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   LoginSplash: undefined,
   SignIn: undefined,
+  UserRegistration: undefined,
   DetailRecipe: undefined
 };
 
@@ -83,6 +84,14 @@ export type User = {
   gender?: string,
   name: string,
   token: string
+}
+
+export type UserRegistrationRequest = {
+  email: string,
+  username: string,
+  gender: string,
+  name: string,
+  password: string
 }
 
 export type UserLoginResponse = {

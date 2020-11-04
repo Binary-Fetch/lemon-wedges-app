@@ -7,8 +7,9 @@ import * as Yup from 'yup';
 import { authRestore, authSingIn } from '../actions/auth.action';
 import { Text, View } from "../components/Themed";
 import { useFocusEffect } from '@react-navigation/native';
+import RecipesService from '../services/recipes';
 
-function SignInScreen({
+function UserRegistrationScreen({
   navigation, authentication, doAuthSingIn, checkLogin
 }: any) {
   useFocusEffect(React.useCallback(() => {
@@ -24,21 +25,27 @@ function SignInScreen({
       .required('Required'),
     password: Yup.string()
       .required('Required'),
+    name: Yup.string()
+      .required('Required'),
+    email: Yup.string()
+      .required('Required'),
+    gender: Yup.string()
+      .required('Required'),
   });
 
   return (
     <Formik
-      initialValues={{ username: '', password: '' }}
+      initialValues={{ username: '', password: '', name: '', email: '', gender: '' }}
       validationSchema={LoginFormSchema}
-      onSubmit={values => {
-        //console.log(values);
-        const { username, password } = values;
-        doAuthSingIn(username, password);
+      onSubmit={async values => {
+        console.log(values);
+        const createUser = await RecipesService().createUser(values);
+        navigation.navigate("SignIn");
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <View style={styles.container}>
-          <Text style={styles.formLabel}>Login before you proceed</Text>
+          <Text style={styles.formLabel}>Register Yourself</Text>
           <TextInput
             placeholder="User Name"
             onChangeText={handleChange('username')}
@@ -60,15 +67,38 @@ function SignInScreen({
           {errors.password && touched.password ? (
             <Text style={{ color: "#f00" }}>{errors.password}</Text>
           ) : null}
-          {/* <ThemedButton title="Submit" onPress={(e: any) => handleSubmit(e)} /> */}
-          {authentication && authentication.error &&
-            <Text style={{ color: "#f00" }}>{authentication.error}</Text>
-          }
+          <TextInput
+            placeholder="Name"
+            onChangeText={handleChange('name')}
+            onBlur={handleBlur('name')}
+            value={values.name}
+            style={styles.inputStyle}
+          />
+          {errors.name && touched.name ? (
+            <Text style={{ color: "#f00" }}>{errors.name}</Text>
+          ) : null}
+          <TextInput
+            placeholder="Email"
+            onChangeText={handleChange('email')}
+            onBlur={handleBlur('email')}
+            value={values.email}
+            style={styles.inputStyle}
+          />
+          {errors.email && touched.email ? (
+            <Text style={{ color: "#f00" }}>{errors.email}</Text>
+          ) : null}
+          <TextInput
+            placeholder="Gender"
+            onChangeText={handleChange('gender')}
+            onBlur={handleBlur('gender')}
+            value={values.gender}
+            style={styles.inputStyle}
+          />
+          {errors.gender && touched.gender ? (
+            <Text style={{ color: "#f00" }}>{errors.gender}</Text>
+          ) : null}
           <View style={styles.separator}>
-            <Button title="Login" onPress={(e: any) => handleSubmit(e)} />
-          </View>
-          <View>
-            <Button title="Sign Up" onPress={e => navigation.navigate('UserRegistration')} />
+            <Button title="Register" onPress={(e: any) => handleSubmit(e)} />
           </View>
         </View>
       )}
@@ -82,14 +112,14 @@ const mapStateToProps = (state: any, ownProps: any) => {
   return { authentication, ...ownProps };
 }
 
-const mapDispatchToProps = (dispatch: any) => (
-  bindActionCreators({
-    doAuthSingIn: authSingIn,
-    checkLogin: authRestore
-  }, dispatch)
-)
+// const mapDispatchToProps = (dispatch: any) => (
+//   bindActionCreators({
+//     doAuthSingIn: authSingIn,
+//     checkLogin: authRestore
+//   }, dispatch)
+// )
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);
+export default connect(mapStateToProps)(UserRegistrationScreen);
 
 /* const styles = StyleSheet.create({
     container: {

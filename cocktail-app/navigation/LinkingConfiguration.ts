@@ -14,6 +14,11 @@ export default {
           SignIn: 'signin'
         }
       },
+      UserRegistration: {
+        screens: {
+          UserRegistration: 'userregistration'
+        }
+      },
       DetailRecipe: {
         screens: {
           DetailRecipe: 'detailrecipe',
