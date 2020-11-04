@@ -2,51 +2,63 @@ const { gql } = require("apollo-server-express");
 const { GraphQLDataSource } = require("apollo-datasource-graphql");
 const constants = require("../constants");
 
+const VERIFY_USER_DETAILS = gql`
+query MyQuery($username: String, $password: String) {
+  queryUser(filter: {username: {eq: $username}, password: {eq: $password}}) {
+    active
+    email
+    gender
+    name
+    username
+  }
+}
+`;
+
 const GET_USER_DETAILS = gql`
-  query getUserDetails($username: String!, $first: Int, $offset: Int) {
-    getUser(username: $username) {
-      active
-      email
-      gender
+query getUserDetails($username: String!, $first: Int, $offset: Int) {
+  getUser(username: $username) {
+    active
+    email
+    gender
+    name
+    username
+    recipes(first: $first, offset: $offset) {
+      desc
+      id
+      imageUrl
+      likes
       name
-      username
-      recipes(first: $first, offset: $offset) {
-        desc
+      ingredients {
+        amount
         id
-        imageUrl
-        likes
-        name
-        ingredients {
-          amount
-          id
-          quantity
-          type
-          unit
-          ingredient {
-            detail
-            name
-          }
-        }
-        prepareSteps {
-          description
-          id
-          imageUrl
-          order
-        }
-        owner {
+        quantity
+        type
+        unit
+        ingredient {
+          detail
           name
         }
       }
+      prepareSteps {
+        description
+        id
+        imageUrl
+        order
+      }
+      owner {
+        name
+      }
     }
   }
+}
 `;
 
 const SAVE_USER_DETAILS = gql`
-  mutation saveUserDetails($input: [AddUserInput!]!) {
-    addUser(input: $input) {
-      numUids
-    }
+mutation saveUserDetails($input: [AddUserInput!]!) {
+  addUser(input: $input) {
+    numUids
   }
+}
 `;
 
 class UserAPI extends GraphQLDataSource {
@@ -73,6 +85,24 @@ class UserAPI extends GraphQLDataSource {
         },
       });
       return response.data.getUser;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async verifyUserDetails(username, password) {
+    try {
+      const response = await this.query(VERIFY_USER_DETAILS, {
+        variables: {
+          username: username,
+          password: password
+        },
+      });
+      let user = '';
+      if(response.data.queryUser.length != 0) {
+        user = response.data.queryUser[0];
+      }
+      return user;
     } catch (error) {
       console.error(error);
     }

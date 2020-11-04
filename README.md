@@ -22,5 +22,4 @@ The Lemon Wedges App  will load in you phone.
 ## Sample User Details
 - username: adutt, password: Test123
 - username: kbiswas, password: Test123
-**Note**: Currently password verification is not available. Authentication is done using valid username. It will be available in future release.
 

@@ -4,7 +4,7 @@ const { AuthenticationError } = require('apollo-server');
 module.exports = {
   Query: {
     login: async (_, { username, password }, { dataSources }) => {
-      const user = await dataSources.userAPI.getUsers(username);
+      const user = await dataSources.userAPI.verifyUserDetails(username, password);
       console.log(user);
       if (user) {
         const token = jwt.sign(
@@ -25,7 +25,7 @@ module.exports = {
         console.log("User not in database.");
       }
     },
-    getUser: (_, {  first, offset }, { dataSources, email , username}) => {
+    getUser: (_, { first, offset }, { dataSources, email, username }) => {
       if (!email) {
         throw new AuthenticationError('Unauthorized access!');
       }
@@ -43,7 +43,10 @@ module.exports = {
       const results = await dataSources.userAPI.saveUsers({ user });
       return results;
     },
-    saveRecipe: async (_, { recipe }, { dataSources }) => {
+    saveRecipe: async (_, { recipe }, { dataSources, email }) => {
+      if (!email) {
+        throw new AuthenticationError('Unauthorized access!');
+      }
       const results = await dataSources.cocktailAPI.saveRecipe({ recipe });
       return results;
     },
