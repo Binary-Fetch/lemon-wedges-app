@@ -22,7 +22,6 @@ export default function RecipeList({ recipes , navigation}: { recipes: CocktailR
         <SafeAreaView style={styles.container}>
             <SectionList<CocktailRecipe>
                 sections={recipeSectionList}
-                
                 renderItem={({ item }) => <RecipeItem recipeDetails={item} navigation={navigation}/>}
                 /* renderSectionHeader={({ section: { title } }) => (
                     <View style={styles.headerContainer}>

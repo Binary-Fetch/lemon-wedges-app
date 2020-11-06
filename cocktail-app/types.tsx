@@ -27,6 +27,7 @@ export type UploadRecipeParamList = {
 export namespace HomeComponent {
   export interface props {
     navigation : any
+    doSignout: Function
   }
   export interface state {
     isLoading: boolean, 
@@ -49,7 +50,8 @@ export namespace DetailRecipeComponent {
 export namespace CreateRecipeComponent {
   export interface Props {
     authentication: any,
-    navigation: any
+    navigation: any,
+    doSignout: Function
   }
   export interface State {
     newRecipe?: CocktailRecipe
@@ -62,7 +64,8 @@ export type MyCocktailRecipesResponse = {
 }
 export namespace MyRecipeComponent {
   export interface props {
-    navigation: any
+    navigation: any,
+    doSignout: Function
   }
   export interface state {
     isLoading: boolean,

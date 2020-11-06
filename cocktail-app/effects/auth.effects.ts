@@ -7,6 +7,7 @@ import { AsyncStorage } from 'react-native';
 export default function* watchAuthProcess() {
     yield takeLatest(ActionTypes.AUTH_LOADING_START, validateAuthData);
     yield takeLatest(ActionTypes.RESTORE_TOKEN, checkExistingAuthSession);
+    yield takeLatest(ActionTypes.SIGN_OUT, deleteStoredCredentials);
 }
 function* validateAuthData(action: any) {
     try {
@@ -19,7 +20,7 @@ function* validateAuthData(action: any) {
             AsyncStorage.setItem(Config.storageKeyForUserDetails, JSON.stringify(userDetails));
             yield(put({type: ActionTypes.SIGN_IN, userDetails, userToken}));
         }else{
-            yield(put({type: ActionTypes.AUTH_LOADING_FAILED, error: Config.loginFailedMessage}));
+            yield(put({type: ActionTypes.AUTH_LOADING_FAILED, error: Config.loginFailedMessage, payload: {username: action.payload.username}}));
         }
     }catch(error) {
         yield(put({type: ActionTypes.AUTH_LOADING_FAILED, error}));
@@ -35,6 +36,16 @@ function* checkExistingAuthSession() {
         }else{
             yield(put({type: ActionTypes.SIGN_OUT}));
         }
+    }catch(error) {
+        console.log(error);
+    }
+}
+
+function* deleteStoredCredentials() {
+    try{
+        yield AsyncStorage.removeItem(Config.storageKeyForAuth);
+        yield AsyncStorage.removeItem(Config.storageKeyForUserDetails);
+        //yield(put({type: ActionTypes.SIGN_OUT}));
     }catch(error) {
         console.log(error);
     }

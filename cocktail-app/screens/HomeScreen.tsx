@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 //import EditScreenInfo from '../components/EditScreenInfo';
@@ -6,9 +7,11 @@ import ResourceLoader from '../components/ResourceLoader';
 import { View } from '../components/Themed';
 import RecipesService from '../services/recipes';
 import { HomeComponent } from '../types';
+import { bindActionCreators } from 'redux';
+import { authSingOut } from '../actions/auth.action';
 
 
-export default class HomeScreen extends React.Component<HomeComponent.props, HomeComponent.state> {
+class HomeScreen extends React.Component<HomeComponent.props, HomeComponent.state> {
   private detachNavigationSubscription: any;
   constructor(props:HomeComponent.props) {
     super(props);
@@ -27,11 +30,10 @@ export default class HomeScreen extends React.Component<HomeComponent.props, Hom
         if (reciepes && reciepes.data) {
           this.setState({ coctailRecipeList: reciepes.data.coctailRecipe })
         }
-      } catch (ex) {
-        console.log(ex.message)
-      }
-      finally {
         setTimeout(() => this.setState({ isLoading: false }));
+      } catch (ex) {
+        console.log(ex.message);
+        this.props.doSignout();
       }
     });
   }
@@ -50,6 +52,19 @@ export default class HomeScreen extends React.Component<HomeComponent.props, Hom
     );
   }
 }
+
+const mapStateToProps = (state: any, ownProps: any) => {
+  const { authentication } = state;
+  return { authentication, ...ownProps };
+}
+
+const mapDispatchToProps = (dispatch: any) => (
+  bindActionCreators({
+    doSignout: authSingOut
+  }, dispatch)
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {

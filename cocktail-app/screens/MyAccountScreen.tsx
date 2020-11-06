@@ -1,5 +1,8 @@
+import { connect } from 'react-redux';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { authSingOut } from '../actions/auth.action';
 import RecipeList from '../components/RecipeList';
 import ResourceLoader from '../components/ResourceLoader';
 //import EditScreenInfo from '../components/EditScreenInfo';
@@ -7,17 +10,15 @@ import { View } from '../components/Themed';
 import RecipesService from '../services/recipes';
 import { MyRecipeComponent } from '../types';
 
-
-
-export default class MyRecipieScreen extends React.Component<MyRecipeComponent.props, MyRecipeComponent.state> {
-  constructor(props:MyRecipeComponent.props) {
+class MyRecipieScreen extends React.Component<MyRecipeComponent.props, MyRecipeComponent.state> {
+  detachNavigationSubscription: any;
+  constructor(props: MyRecipeComponent.props) {
     super(props);
-
     this.state = {
       isLoading: false,
       user: {
-        username:"",
-        name:"",
+        username: "",
+        name: "",
         token: ""
       },
       coctailRecipeList: []
@@ -25,35 +26,54 @@ export default class MyRecipieScreen extends React.Component<MyRecipeComponent.p
   }
 
   async componentDidMount() {
-    this.setState({isLoading: true});
-    try{
-      const reciepes = await RecipesService().getMyRecipes();
-      if(reciepes && reciepes.data ) {
-        this.setState({coctailRecipeList: reciepes.data.getUser.recipes, user:{
-          name: reciepes.data.getUser.name,
-          username: reciepes.data.getUser.username,
-          token: ""
-          
-        }})
+    this.detachNavigationSubscription = this.props.navigation.addListener('focus', async () => {
+      this.setState({ isLoading: true });
+      try {
+        const reciepes = await RecipesService().getMyRecipes();
+        if (reciepes && reciepes.data) {
+          this.setState({
+            coctailRecipeList: reciepes.data.getUser.recipes, user: {
+              name: reciepes.data.getUser.name,
+              username: reciepes.data.getUser.username,
+              token: ""
+            }
+          })
+        }
+        this.setState({ isLoading: false });
+      } catch (ex) {
+        console.log(ex.message);
+        this.props.doSignout();
       }
-    }catch(ex) {
-      console.log(ex.message)
-    }
-    finally{
-      setTimeout(() => this.setState({isLoading: false}));
-    }
+    });
+  }
+
+  componentWillUnmount() {
+    this.detachNavigationSubscription();
   }
 
   render() {
-    const {isLoading, coctailRecipeList} = this.state;
+    const { isLoading, coctailRecipeList } = this.state;
     return (
       <View style={styles.container}>
-        {isLoading && <ResourceLoader  /> }
-        {!isLoading  && <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation}/>}
+        {isLoading && <ResourceLoader />}
+        {!isLoading && coctailRecipeList && <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation} />}
       </View>
     );
   }
 }
+
+const mapStateToProps = (state: any, ownProps: any) => {
+  const { authentication } = state;
+  return { authentication, ...ownProps };
+}
+
+const mapDispatchToProps = (dispatch: any) => (
+  bindActionCreators({
+    doSignout: authSingOut
+  }, dispatch)
+)
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyRecipieScreen)
 
 const styles = StyleSheet.create({
   container: {

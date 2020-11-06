@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Button, NativeSyntheticEvent, NativeTouchEvent, StyleSheet, TextInput, Alert } from 'react-native';
-import { Button as ThemedButton, ThemeProvider } from 'react-native-elements';
-import { Text, View } from '../components/Themed';
-import RecipesService from '../services/recipes';
-import { CocktailRecipe, CreateRecipeComponent } from '../types';
-import GenericUtils from '../utils/GenericUtil';
 import { Formik } from 'formik';
+import * as React from 'react';
+import { StyleSheet, TextInput } from 'react-native';
+import { Button as ThemedButton, ThemeProvider } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
+import { authSingOut } from '../actions/auth.action';
+import { Text, View } from '../components/Themed';
+import RecipesService from '../services/recipes';
+import { CreateRecipeComponent } from '../types';
 
 class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, CreateRecipeComponent.State> {
     constructor(props: CreateRecipeComponent.Props) {
@@ -71,7 +71,6 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
             imageUrl: Yup.string()
                 .required('Required')
         });
-        let addButtonName = "Submit";
         return (
             <ThemeProvider>
                 <Formik
@@ -88,8 +87,9 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                             navigation.navigate("HomeScreen"); 
                         }catch(ex) {
                             this.setState({creationMessage: ex.message});
-                        } finally{
                             this.setState({submissionInProg: false});
+                            console.log(ex.message);
+                            this.props.doSignout();
                         }
                         
                     }}
@@ -161,7 +161,13 @@ const mapStateToProps = (state: any, ownProps: any) => {
     return { authentication, ...ownProps };
 }
 
-export default connect(mapStateToProps)(CreateRecipeScreen);
+const mapDispatchToProps = (dispatch: any) => (
+    bindActionCreators({
+      doSignout: authSingOut
+    }, dispatch)
+  )
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRecipeScreen);
 
 const styles = StyleSheet.create({
     container: {
