@@ -7,9 +7,8 @@ export default function RecipeItem({ recipeDetails , navigation}: { recipeDetail
     return (
         <View style={styles.container}>
             <Item imageUri={recipeDetails.imageUrl} navigation={navigation} />
-            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe',{recipeDetails})}>{recipeDetails.name ? recipeDetails.name : ' '}</Text>
-    
-    {/* <Text style={styles.description}>{recipeDetails.owner.username}</Text> */}
+            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe',{recipeDetails})}>{recipeDetails.name? recipeDetails.name : ' '}</Text>
+            <Text style={{textAlign:"right"}}>@<Text style={styles.description}>{recipeDetails.owner.name}</Text> </Text>
         </View>
     );
 }
@@ -53,7 +52,8 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 14,
-        textAlign: "auto"
+        textAlign: "auto",
+        textDecorationLine:"underline"
     },
     title: {
         fontSize: 24,
