@@ -24,7 +24,7 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "description": "Explore a fascinating world of bartending in a new way.\nLearn what ingredients you need and how to mix your favorite manhattans, \nsours, mojitos, and thousands of other cocktails.\nMobile app to explore these recipes and also submit your own and share them with your friends.",
+    "description": "Explore a fascinating world of bartending in a new way.\nLearn what ingredients you need and how to mix your favorite manhattans, \nsours, mojitos, and thousands of other cocktails.\nMobile app to explore these recipes and also submit your own and share them with your friends.\n\nExpo ProjectLink: https://expo.io/@binaryfetch/projects/lemon-wedges-app\n\nLogin Creds: Username : adutt password: Test123 Username : kbiswas password: Test123",
     "githubUrl": "https://github.com/Binary-Fetch/lemon-wedges-app"
   }
 }
