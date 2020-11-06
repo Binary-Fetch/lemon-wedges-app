@@ -29,6 +29,9 @@ export default function RecipesService() {
                             name
                         }
                 }
+                owner {
+                    name
+                }
                 prepareSteps {
                     description
                     id
@@ -50,6 +53,9 @@ export default function RecipesService() {
                         imageUrl
                         likes
                         name
+                        owner {
+                            name
+                        }
                         ingredients {
                             amount
                             id
