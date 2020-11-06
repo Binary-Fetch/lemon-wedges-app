@@ -24,9 +24,9 @@ const typeDefs = gql`
   # User Model
   type User {
     username: String!
-    email: String
-    name: String
-    gender: String
+    email: String!
+    name: String!
+    gender: String!
     active: UserStatus
     recipes: [CoctailRecipe]
   }
@@ -34,6 +34,10 @@ const typeDefs = gql`
   enum UserStatus {
     ACTIVE
     INACTIVE
+  }
+
+  input OwnerInput {
+    username: String!
   }
 
   input UserInput {
@@ -106,7 +110,7 @@ const typeDefs = gql`
     imageUrl: [String!]
     name: String!
     prepareSteps: [PrepareStepsInput]
-    owner: UserInput
+    owner: OwnerInput
     ingredients: [IngredientsInput]
   }
 
