@@ -56,7 +56,7 @@ class MyRecipieScreen extends React.Component<MyRecipeComponent.props, MyRecipeC
     return (
       <View style={styles.container}>
         {isLoading && <ResourceLoader />}
-        {/* {!isLoading && <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation} />} */}
+        {!isLoading && coctailRecipeList && <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation} />}
       </View>
     );
   }

@@ -7,7 +7,7 @@ export default function RecipeItem({ recipeDetails , navigation}: { recipeDetail
     return (
         <View style={styles.container}>
             <Item imageUri={recipeDetails.imageUrl} navigation={navigation} />
-            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe',{recipeDetails})}>{recipeDetails.name}</Text>
+            <Text style={styles.title} onPress={e=> navigation.navigate('DetailRecipe',{recipeDetails})}>{recipeDetails.name ? recipeDetails.name : ' '}</Text>
     
     {/* <Text style={styles.description}>{recipeDetails.owner.username}</Text> */}
         </View>
@@ -17,7 +17,7 @@ export default function RecipeItem({ recipeDetails , navigation}: { recipeDetail
 const Item = ({ imageUri,navigation }: { imageUri: string[] | undefined , navigation:any}) => {
     return (
         <View style={styles.imageItem}>
-            {imageUri && imageUri[0] && <Image  source={{ uri: imageUri[0] }} style={styles.image} />}
+            {!!imageUri && !!imageUri[0] && <Image  source={{ uri: imageUri[0] }} style={styles.image} />}
             {!imageUri || (imageUri && !imageUri[0]) && <Text style={styles.title}>No Image Exists</Text>}
         </View>
     );
