@@ -4,7 +4,8 @@ const initialState = {
     isSignout: false,
     userToken: null,
     userDetails: null,
-    error: null
+    error: null,
+    username: null
 };
 const authenticationReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
@@ -13,7 +14,7 @@ const authenticationReducer = (state: any = initialState, action: any) => {
                 ...state,
                 isLoading: true,
                 userToken: action.userToken,
-                userDetails: action.userDetails
+                userDetails: action.userDetails,
             };
         case ActionTypes.SIGN_IN:
             return {
@@ -21,7 +22,9 @@ const authenticationReducer = (state: any = initialState, action: any) => {
                 isLoading: false,
                 isSignout: false,
                 userToken: action.userToken,
-                userDetails: action.userDetails
+                userDetails: action.userDetails,
+                error: null,
+                username: null
             };
         case ActionTypes.SIGN_OUT:
             return {
@@ -39,7 +42,8 @@ const authenticationReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 isLoading: false,
-                error: action.error
+                error: action.error,
+                username: action.payload.username
             }
         default:
             return state;

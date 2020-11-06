@@ -28,7 +28,7 @@ function SignInScreen({
 
   return (
     <Formik
-      initialValues={{ username: '', password: '' }}
+      initialValues={{ username: authentication.username, password: '' }}
       validationSchema={LoginFormSchema}
       onSubmit={values => {
         //console.log(values);
