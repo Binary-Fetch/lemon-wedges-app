@@ -24,9 +24,9 @@ const typeDefs = gql`
   # User Model
   type User {
     username: String!
-    email: String!
-    name: String!
-    gender: String!
+    email: String
+    name: String
+    gender: String
     active: UserStatus
     recipes: [CoctailRecipe]
   }
