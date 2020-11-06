@@ -2,6 +2,7 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Image } from "react-native";
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import CreateRecipeScreen from '../screens/CreateRecipeScreen';
@@ -66,7 +67,14 @@ function HomeTabNavigator() {
       <TabHomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Welcome' }}
+        options={{ 
+          headerTitle: ' ', 
+          headerBackground: props => (
+            <Image
+            style={{ width: 104, height: 60, marginTop: 15, marginLeft: 8 }}
+            source={require('../assets/images/lemon_wedges.png')}
+          />
+        )}}
       />
     </TabHomeStack.Navigator>
   );
@@ -80,7 +88,14 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="MyAccount"
         component={MyAccountScreen}
-        options={{ headerTitle: 'My Recipe' }}
+        options={{ 
+          headerTitle: ' ', 
+          headerBackground: props => (
+            <Image
+            style={{ width: 104, height: 60, marginTop: 15, marginLeft: 8 }}
+            source={require('../assets/images/lemon_wedges.png')}
+          />
+        )}}
       />
     </TabTwoStack.Navigator>
   );
@@ -94,7 +109,14 @@ function TabUploadRecipeNavigator() {
       <UploadRecipeStack.Screen
         name="UploadRecipe"
         component={CreateRecipeScreen}
-        options={{ headerTitle: 'Upload Recipe' }}
+        options={{ 
+          headerTitle: ' ', 
+          headerBackground: props => (
+            <Image
+            style={{ width: 104, height: 60, marginTop: 15, marginLeft: 8 }}
+            source={require('../assets/images/lemon_wedges.png')}
+          />
+        )}}
       />
     </UploadRecipeStack.Navigator>
   );
