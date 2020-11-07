@@ -64,6 +64,14 @@ export namespace CreateRecipeComponent {
 export type MyCocktailRecipesResponse = {
   getUser: any
 }
+
+export type MyCocktailRecipeImageUploadResponse = {
+  filename?: string
+  mimetype?: string
+  encoding?: string
+  url?: string
+}
+
 export namespace MyRecipeComponent {
   export interface props {
     navigation: any,

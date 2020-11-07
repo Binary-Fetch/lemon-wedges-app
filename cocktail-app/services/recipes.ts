@@ -1,6 +1,6 @@
 
 import { gql } from '@apollo/client';
-import { CocktailRecipe, CocktailRecipeResponse, MyCocktailRecipesResponse, UserRegistrationRequest } from '../types';
+import { CocktailRecipe, CocktailRecipeResponse, MyCocktailRecipeImageUploadResponse, MyCocktailRecipesResponse, UserRegistrationRequest } from '../types';
 import getApolloGQLClient from './apollo-gql-client-config';
 
 export default function RecipesService() {
@@ -113,10 +113,28 @@ export default function RecipesService() {
         });
     }
 
+    const uploadFile = async (fileFormData: any) => {
+        const client = await getApolloGQLClient();
+        return await client.mutate<MyCocktailRecipeImageUploadResponse>({
+            mutation: gql`
+                mutation uploadFile($file: Upload!){
+                    recipeImageUpload(file: $file) {
+                        filename
+                        mimetype
+                        encoding
+                        url
+                    }
+                }
+            `,
+            variables: {file: fileFormData}
+        });
+    }
+
     return {
         getRecipes,
         createRecipe,
         getMyRecipes,
+        uploadFile,
         createUser
     }
 }

@@ -1,6 +1,7 @@
+import * as ImagePicker from 'expo-image-picker';
 import { FieldArray, Formik } from 'formik';
 import * as React from 'react';
-import { Button, StyleSheet, TextInput, Platform } from 'react-native';
+import { Button, Platform, StyleSheet, TextInput } from 'react-native';
 import { Button as ThemedButton, ThemeProvider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
@@ -9,9 +10,8 @@ import * as Yup from 'yup';
 import { authSingOut } from '../actions/auth.action';
 import { Text, View } from '../components/Themed';
 import RecipesService from '../services/recipes';
-import { CreateRecipeComponent } from '../types';
-import * as ImagePicker from 'expo-image-picker';
-import { VariablesInAllowedPositionRule } from 'graphql';
+import { CreateRecipeComponent, MyCocktailRecipeImageUploadResponse } from '../types';
+import { ReactNativeFile } from 'apollo-upload-client';
 
 class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, CreateRecipeComponent.State> {
     constructor(props: CreateRecipeComponent.Props) {
@@ -32,18 +32,19 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
     }
 
     private async _initCameraPermission() {
-        if(Platform.OS != 'web') {
-            const {status: cameraPermissionStatus } = await ImagePicker.requestCameraRollPermissionsAsync();
-            if(cameraPermissionStatus != "granted") {
+        if (Platform.OS != 'web') {
+            const { status: cameraPermissionStatus } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if (cameraPermissionStatus != "granted") {
                 alert('Camera Permission denied');
             }
         }
     }
-    
-    private _processImageFileForUpload(result: ImagePicker.ImagePickerResult) {
+
+    private async _processImageFileForUpload(result: ImagePicker.ImagePickerResult) {
         // ImagePicker saves the taken photo to disk and returns a local URI to it
-        if(result.cancelled)
-            return ;
+        console.log(result);
+        if (result.cancelled)
+            return;
         let localUri = result.uri;
         let filename = localUri.split('/').pop();
         filename = filename ? filename : ' ';
@@ -53,11 +54,21 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
         let type = match ? `image/${match[1]}` : `image`;
 
         // Upload the image using the fetch and FormData APIs
-        let formData: any = new FormData();
+        /* let formData: any = new FormData();
         // Assume "photo" is the name of the form field the server expects
-        formData.append('imageUrl', { uri: localUri, name: filename, type });
-
-        this.setState({imageFormData: formData, imageURI: localUri});
+        console.log("upload data", { uri: localUri, name: filename, type });
+        formData.append('file', { uri: localUri, name: filename, type }); */
+        try {
+            const file = new ReactNativeFile({
+                uri: localUri,
+                name: filename,
+                type,
+              });
+            const uploadResponse: any = await RecipesService().uploadFile(file);
+            this.setState({ /* imageFormData: formData, */ imageURI: uploadResponse.filename });
+        } catch (ex) {
+            console.log(ex);
+        }
     }
 
     async selectPhotos(event: any) {
@@ -70,7 +81,7 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
 
         console.log(result);
 
-        if(!result.cancelled) {
+        if (!result.cancelled) {
             this._processImageFileForUpload(result);
         }
     }
@@ -85,7 +96,7 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
 
         console.log(result);
 
-        if(!result.cancelled) {
+        if (!result.cancelled) {
             this._processImageFileForUpload(result);
         }
     }
@@ -177,7 +188,7 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                         onChangeText={handleChange('imageUrl')}
                                         onBlur={handleBlur('imageUrl')}
                                         value={imageURI}
-                                       
+
                                         multiline={true}
                                         style={styles.inputStyle}
                                     />
