@@ -50,13 +50,14 @@ module.exports = {
       const results = await dataSources.cocktailAPI.saveRecipe({ recipe });
       return results;
     },
-    singleUpload: async (_, { args }, { dataSources }) => {
-      return args.file.then((file) => {
-        //Contents of Upload scalar: https://github.com/jaydenseric/graphql-upload#class-graphqlupload
-        //file.createReadStream() is a readable node stream that contains the contents of the uploaded file
-        //node stream api: https://nodejs.org/api/stream.html
-        return file;
-      });
+    recipeImageUpload: async (_, { file }, { dataSources }) => {
+      const { stream, filename, mimetype, encoding } = await file;
+      // Do work 💪
+      return { 
+        filename, 
+        mimetype, 
+        encoding, 
+        url: 'https://www.thespruceeats.com/thmb/Vh9Ari_ojFCPvKtb1D5rIqqh2ZA=/3828x3828/smart/filters:no_upscale()/_kamikaze-cocktail-recipe-759313-hero-5bb7c7e846e0fb0051ee4eb4.jpg' }
     },
   },
 };

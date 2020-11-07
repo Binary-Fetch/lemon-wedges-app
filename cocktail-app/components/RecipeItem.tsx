@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 14,
-        textAlign: "auto",
         textDecorationLine:"underline"
     },
     title: {
