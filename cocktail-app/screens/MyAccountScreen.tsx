@@ -1,14 +1,16 @@
-import { connect } from 'react-redux';
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { Avatar, Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { authSingOut } from '../actions/auth.action';
 import RecipeList from '../components/RecipeList';
 import ResourceLoader from '../components/ResourceLoader';
-//import EditScreenInfo from '../components/EditScreenInfo';
-import { View } from '../components/Themed';
+import { Text, View } from '../components/Themed';
 import RecipesService from '../services/recipes';
 import { MyRecipeComponent } from '../types';
+import GenericUtils from '../utils/GenericUtil';
 
 class MyRecipieScreen extends React.Component<MyRecipeComponent.props, MyRecipeComponent.state> {
   detachNavigationSubscription: any;
@@ -53,11 +55,33 @@ class MyRecipieScreen extends React.Component<MyRecipeComponent.props, MyRecipeC
 
   render() {
     const { isLoading, coctailRecipeList } = this.state;
+    const { authentication, doSignout } = this.props;
     return (
-      <View style={styles.container}>
-        {isLoading && <ResourceLoader />}
-        {!isLoading && coctailRecipeList && <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation} />}
-      </View>
+      <SafeAreaView style={styles.container}>
+        {isLoading && <View style={styles.rcipeArea}><ResourceLoader /></View>}
+        {!isLoading &&
+          <View style={styles.avatarArea}>
+            <Avatar rounded avatarStyle={{ borderColor: "#fff", borderWidth: 1 }} title={GenericUtils.generateAvatarTitle(authentication.userDetails.name)} size="large" />
+            <Text style={{ fontSize: 16 }}>{authentication.userDetails.name}</Text>
+            <Button
+              icon={
+                <Icon
+                  name="sign-out"
+                  size={15}
+                  color="white"
+                />
+              }
+              title="Logout"
+              onPress={e => doSignout()}
+            />
+          </View>
+        }
+        {!isLoading && coctailRecipeList &&
+          <View style={styles.rcipeArea}>
+            <RecipeList recipes={coctailRecipeList} navigation={this.props.navigation} />
+          </View>
+        }
+      </SafeAreaView>
     );
   }
 }
@@ -76,6 +100,19 @@ const mapDispatchToProps = (dispatch: any) => (
 export default connect(mapStateToProps, mapDispatchToProps)(MyRecipieScreen)
 
 const styles = StyleSheet.create({
+  avatarArea: {
+    height: 150,
+    backgroundColor: "palegreen",
+    width: "100%",
+    alignItems: "center",
+    padding: 5
+  },
+  rcipeArea: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    marginTop: 10
+  },
   container: {
     flex: 1,
     alignItems: 'center',

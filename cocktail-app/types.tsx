@@ -65,7 +65,8 @@ export type MyCocktailRecipesResponse = {
 export namespace MyRecipeComponent {
   export interface props {
     navigation: any,
-    doSignout: Function
+    doSignout: Function,
+    authentication: any
   }
   export interface state {
     isLoading: boolean,
