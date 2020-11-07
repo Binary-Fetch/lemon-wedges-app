@@ -3,7 +3,7 @@ import { StyleSheet, Image, SectionList, SafeAreaView, useColorScheme } from 're
 import RecipeItem from '../components/RecipeItem';
 import { View , Text} from '../components/Themed';
 import Colors from '../constants/Colors';
-import { DetailRecipeComponent, Ingredients } from '../types';
+import { DetailRecipeComponent, Ingredients, PreparationStep } from '../types';
 
 export default class DetailRecipeScreen extends React.Component<DetailRecipeComponent.Props, DetailRecipeComponent.State> {
     constructor(props: DetailRecipeComponent.Props) {
@@ -17,6 +17,7 @@ export default class DetailRecipeScreen extends React.Component<DetailRecipeComp
        
         const { recipeDetails }= this.props.route.params;
         let IngeredientSectionList;
+        let PrepareStepList;
         if (Array.isArray(recipeDetails.ingredients)) {
             IngeredientSectionList = recipeDetails.ingredients.map((ingredient: Ingredients) => {
                 return {
@@ -25,10 +26,20 @@ export default class DetailRecipeScreen extends React.Component<DetailRecipeComp
                 }
             });
         }
+        if (Array.isArray(recipeDetails.prepareSteps)) {
+            PrepareStepList = recipeDetails.prepareSteps.map((preparestep: PreparationStep) => {
+                return {
+                    data: [preparestep],
+                    title: preparestep.order,
+                }
+            });
+        }
         return (
             <SafeAreaView style={styles.containerroot}>
                 <Text style={styles.title}>{recipeDetails.name}</Text>
                 <Item imageUri={recipeDetails.imageUrl}  />
+                <Text style={styles.titleEnd}>{recipeDetails.desc || 'Invented in the 1920s in honor of the Rudolph Valentino film of the same name, the Blood & Sand has withstood the test of time for almost 100 years.'}</Text>
+                
                 <Text style={styles.title2}>Ingredients</Text>
                 <View style={styles.container}>
                  <SectionList<Ingredients>
@@ -39,8 +50,13 @@ export default class DetailRecipeScreen extends React.Component<DetailRecipeComp
             </View>
             <Text style={styles.title2}>Prepare Steps</Text>
             <View style={styles.container}>
+            <SectionList<PreparationStep>
+                sections={PrepareStepList}
+                keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <View style={ styles.ingredientrow}><Text>{item.description}</Text></View>}  
+            />
             
-            <Text>{recipeDetails.prepareSteps[0].description}</Text> 
+            
             </View>
             <Text></Text>
                {/* <RecipeItem recipeDetails={this.state.coctailRecipe}></RecipeItem> */}
@@ -103,11 +119,22 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         fontSize: 24,
         textAlign: "center"
+    },titleEnd: {
+        flex: 0.3,
+        fontStyle:"italic",
+        padding:5,
+        backgroundColor: "grey",
+        borderWidth: 0.5,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        fontSize: 12,
+        textAlign: "center"
     },title2: {
         flex: 0.3,
         marginTop: 5,
         marginLeft: 2,
         marginRight: 2,
+        padding:5,
         backgroundColor: "grey",
         borderWidth: 0.5,
         borderTopLeftRadius: 20,

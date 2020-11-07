@@ -126,6 +126,16 @@ mutation {
 ```
 - Save Recipe (Sample Requets & Sample Response)
 ```
+mutation{
+  recipeImageUpload(file:Upload!) {
+    filename
+    mimetype
+    encoding
+    url
+  }
+}
+```
+```
 mutation {
   saveRecipe(recipe:{
       desc: "Create cocktail by following easy steps",

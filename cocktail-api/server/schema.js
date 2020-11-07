@@ -12,13 +12,14 @@ const typeDefs = gql`
   type Mutation {
     saveUser(user: UserInput): UserUpdateResponse!
     saveRecipe(recipe: RecipeInput): RecipeUpdateResponse!
-    singleUpload(file: Upload!): File!
+    recipeImageUpload(file: Upload!): ImageUploadResponse!
   }
 
-  type File {
+  type ImageUploadResponse {
     filename: String!
     mimetype: String!
     encoding: String!
+    url: String!
   }
 
   # User Model

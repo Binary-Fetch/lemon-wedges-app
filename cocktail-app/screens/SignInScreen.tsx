@@ -1,12 +1,14 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, Image, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
 import { authRestore, authSingIn } from '../actions/auth.action';
 import { Text, View } from "../components/Themed";
 import { useFocusEffect } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
 
 function SignInScreen({
   navigation, authentication, doAuthSingIn, checkLogin
@@ -38,32 +40,52 @@ function SignInScreen({
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <View style={styles.container}>
-          <Text style={styles.formLabel}>Login before you proceed</Text>
-          <TextInput
-            placeholder="User Name"
-            onChangeText={handleChange('username')}
-            onBlur={handleBlur('username')}
-            value={values.username}
-            style={styles.inputStyle}
-          />
-          {errors.username && touched.username ? (
-            <Text style={{ color: "#f00" }}>{errors.username}</Text>
-          ) : null}
-          <TextInput
-            placeholder="Password"
-            onChangeText={handleChange('password')}
-            onBlur={handleBlur('password')}
-            value={values.password}
-            style={styles.inputStyle}
-            secureTextEntry={true}
-          />
-          {errors.password && touched.password ? (
+          <View>
+            <Image source={require('../assets/images/lemon.png')} style={styles.image} />
+          </View>
+          <View>
+            <Input
+              label='Your Username'
+              containerStyle={styles.inputStyle}
+              leftIcon={
+                <Icon
+                  name='user'
+                  size={24}
+                  color='black'
+                />
+              }
+              placeholder="User Name"
+              onChangeText={handleChange('username')}
+              onBlur={handleBlur('username')}
+              value={values.username}
+              errorMessage={touched.username && errors.username ? 'Required' : undefined}
+            />
+            <Input
+              label='Password'
+              containerStyle={styles.inputStyle}
+              leftIcon={
+                <Icon
+                  name='lock'
+                  size={24}
+                  color='black'
+                />
+              }
+              placeholder="Password"
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
+              secureTextEntry={true}
+              errorStyle={{ color: 'red' }}
+              errorMessage={touched.password && errors.password ? errors.password : undefined}
+            />
+            {/* {errors.password && touched.password ? (
             <Text style={{ color: "#f00" }}>{errors.password}</Text>
-          ) : null}
-          {/* <ThemedButton title="Submit" onPress={(e: any) => handleSubmit(e)} /> */}
-          {authentication && authentication.error &&
-            <Text style={{ color: "#f00" }}>{authentication.error}</Text>
-          }
+          ) : null} */}
+            {/* <ThemedButton title="Submit" onPress={(e: any) => handleSubmit(e)} /> */}
+            {authentication && authentication.error &&
+              <Text style={{ color: "#f00" }}>{authentication.error}</Text>
+            }
+          </View>
           <View style={styles.separator}>
             <Button title="Login" onPress={(e: any) => handleSubmit(e)} />
           </View>
@@ -77,6 +99,15 @@ function SignInScreen({
 
 }
 
+const Item = ({ imageUri }: { imageUri: string[] | undefined }) => {
+  return (
+    <View style={styles.imageItem}>
+      {!!imageUri && !!imageUri[0] && <Image source={require('../assets/images/lemon.png')} style={styles.image} />}
+      {!imageUri || (imageUri && !imageUri[0]) && <Text >No Image Exists</Text>}
+    </View>
+  );
+
+}
 const mapStateToProps = (state: any, ownProps: any) => {
   const { authentication } = state;
   return { authentication, ...ownProps };
@@ -107,22 +138,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: "98%"
   },
   formLabel: {
     fontSize: 20
   },
+  imageItem: {
+    padding: 0,
+    marginVertical: 0
+  }, image: {
+    height: 250,
+    width: 250,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    resizeMode: 'contain',
+  },
   formErrorMessage: {
     color: '#f00'
   },
   inputStyle: {
-    marginTop: 20,
+    margin: 25,
     width: 300,
-    height: 40,
+    height: 60,
     paddingHorizontal: 10,
-    borderRadius: 50,
-    backgroundColor: '#DCDCDC',
   },
   separator: {
     marginVertical: 8,
