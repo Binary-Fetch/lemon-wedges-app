@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, Image, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
@@ -38,6 +38,9 @@ function SignInScreen({
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <View style={styles.container}>
+          <View style={{flex:.5}}>
+          <Image  source={require('../assets/images/lemon.png')} style={styles.image} />
+          </View>
           <Text style={styles.formLabel}>Login before you proceed</Text>
           <TextInput
             placeholder="User Name"
@@ -77,6 +80,15 @@ function SignInScreen({
 
 }
 
+const Item = ({ imageUri }: { imageUri: string[] | undefined }) => {
+  return (
+      <View style={styles.imageItem}>
+          {!!imageUri && !!imageUri[0] && <Image  source={require('../assets/images/lemon.png')} style={styles.image} />}
+          {!imageUri || (imageUri && !imageUri[0]) && <Text >No Image Exists</Text>}
+      </View>
+  );
+
+}
 const mapStateToProps = (state: any, ownProps: any) => {
   const { authentication } = state;
   return { authentication, ...ownProps };
@@ -107,12 +119,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     width: "98%"
   },
   formLabel: {
     fontSize: 20
   },
+  imageItem: {
+      padding: 0,
+      marginVertical: 0
+  },image: {
+    height:250,
+    width: 250,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    resizeMode:'contain',
+},
   formErrorMessage: {
     color: '#f00'
   },
