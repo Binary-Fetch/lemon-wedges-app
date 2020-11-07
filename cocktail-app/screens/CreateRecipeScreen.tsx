@@ -62,10 +62,11 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
             const file = new ReactNativeFile({
                 uri: localUri,
                 name: filename,
-                type,
+                type
               });
+
             const uploadResponse: any = await RecipesService().uploadFile(file);
-            this.setState({ /* imageFormData: formData, */ imageURI: uploadResponse.filename });
+            this.setState({ /* imageFormData: formData, */ imageURI: uploadResponse.data.recipeImageUpload.url });
         } catch (ex) {
             console.log(ex);
         }
@@ -142,11 +143,12 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                         try {
                             //console.log(values);
                             let finalValue: any = { ...values };
-                            finalValue.imageUrl = [values.imageUrl];
+                            finalValue.imageUrl = [imageURI];
                             finalValue.owner = { username: authentication.userDetails.username };
                             console.log(this.state.imageFormData);
                             this.setState({ submissionInProg: true });
                             const createCocktail = await RecipesService().createRecipe(finalValue);
+                            this.setState({imageURI: '', submissionInProg: false});
                             navigation.navigate("MyAccount");
                         } catch (ex) {
                             this.setState({ creationMessage: ex.message });
@@ -183,20 +185,26 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                     {errors.desc && touched.desc ? (
                                         <Text style={{ color: "#f00" }}>{errors.desc}</Text>
                                     ) : null}
+                                    <View style={{ borderWidth: 0.5, padding: 5, marginTop: 5 }}>
+                                    <Text style={styles.headerContent}>Upload Image</Text>
                                     <TextInput
                                         placeholder="Image Url"
                                         onChangeText={handleChange('imageUrl')}
                                         onBlur={handleBlur('imageUrl')}
                                         value={imageURI}
-
                                         multiline={true}
                                         style={styles.inputStyle}
                                     />
-                                    <ThemedButton onPress={this.selectPhotos} title="Select photo"></ThemedButton>
-                                    <ThemedButton onPress={this.takePhotos} title="Take photo"></ThemedButton>
+                                    <View style={styles.separator}>
+                                        <ThemedButton onPress={this.selectPhotos} title="Select photo"></ThemedButton>
+                                    </View>
+                                    <View style={styles.separator}>
+                                        <ThemedButton onPress={this.takePhotos} title="Take photo"></ThemedButton>
+                                    </View>
                                     {errors.imageUrl && touched.imageUrl ? (
                                         <Text style={{ color: "#f00" }}>{errors.imageUrl}</Text>
                                     ) : null}
+                                    </View>
                                 </View>
                                 <FieldArray name="ingredients">
                                     {({ insert, remove, push }) => (

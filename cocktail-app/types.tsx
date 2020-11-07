@@ -66,10 +66,14 @@ export type MyCocktailRecipesResponse = {
 }
 
 export type MyCocktailRecipeImageUploadResponse = {
-  filename?: string
-  mimetype?: string
-  encoding?: string
-  url?: string
+  data: {
+    recipeImageUpload: {
+      name?: string
+      /* mimetype?: string
+      encoding?: string */
+      url?: string
+    }
+  }
 }
 
 export namespace MyRecipeComponent {

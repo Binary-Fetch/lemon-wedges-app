@@ -51,13 +51,12 @@ module.exports = {
       return results;
     },
     recipeImageUpload: async (_, { file }, { dataSources }) => {
-      const { stream, filename, mimetype, encoding } = await file;
+      const { uri, name, type } = await file;
       // Do work 💪
       return { 
-        filename, 
-        mimetype, 
-        encoding, 
-        url: 'https://www.thespruceeats.com/thmb/Vh9Ari_ojFCPvKtb1D5rIqqh2ZA=/3828x3828/smart/filters:no_upscale()/_kamikaze-cocktail-recipe-759313-hero-5bb7c7e846e0fb0051ee4eb4.jpg' }
+        name,
+        url: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Cocktail_1_bg_060702.jpg' 
+      }
     },
   },
 };

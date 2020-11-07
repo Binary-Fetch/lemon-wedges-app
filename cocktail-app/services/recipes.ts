@@ -119,9 +119,7 @@ export default function RecipesService() {
             mutation: gql`
                 mutation uploadFile($file: Upload!){
                     recipeImageUpload(file: $file) {
-                        filename
-                        mimetype
-                        encoding
+                        name
                         url
                     }
                 }

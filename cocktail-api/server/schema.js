@@ -16,10 +16,8 @@ const typeDefs = gql`
   }
 
   type ImageUploadResponse {
-    filename: String!
-    mimetype: String!
-    encoding: String!
-    url: String!
+    name: String
+    url: String
   }
 
   # User Model
