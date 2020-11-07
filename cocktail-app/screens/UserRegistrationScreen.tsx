@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import * as React from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, Image, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
@@ -45,6 +45,7 @@ function UserRegistrationScreen({
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <View style={styles.container}>
+          <Image  source={require('../assets/images/lemon.png')} style={styles.image} />
           <Text style={styles.formLabel}>Register Yourself</Text>
           <TextInput
             placeholder="User Name"
@@ -142,7 +143,13 @@ const styles = StyleSheet.create({
   },
   formLabel: {
     fontSize: 20
-  },
+  },image: {
+    height:150,
+    width: 150,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    resizeMode:'contain',
+},
   formErrorMessage: {
     color: '#f00'
   },
