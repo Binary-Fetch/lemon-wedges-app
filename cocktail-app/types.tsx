@@ -56,7 +56,9 @@ export namespace CreateRecipeComponent {
   export interface State {
     newRecipe?: CocktailRecipe
     creationMessage?: string
-    submissionInProg: boolean
+    submissionInProg: boolean,
+    imageURI?: string,
+    imageFormData: any
   }
 }
 export type MyCocktailRecipesResponse = {

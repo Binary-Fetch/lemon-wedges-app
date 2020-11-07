@@ -5,7 +5,7 @@ const initialState = {
     userToken: null,
     userDetails: null,
     error: null,
-    username: null
+    username: ''
 };
 const authenticationReducer = (state: any = initialState, action: any) => {
     switch (action.type) {

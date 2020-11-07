@@ -1,6 +1,6 @@
 import { FieldArray, Formik } from 'formik';
 import * as React from 'react';
-import { Button, StyleSheet, TextInput } from 'react-native';
+import { Button, StyleSheet, TextInput, Platform } from 'react-native';
 import { Button as ThemedButton, ThemeProvider } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
@@ -10,13 +10,83 @@ import { authSingOut } from '../actions/auth.action';
 import { Text, View } from '../components/Themed';
 import RecipesService from '../services/recipes';
 import { CreateRecipeComponent } from '../types';
+import * as ImagePicker from 'expo-image-picker';
+import { VariablesInAllowedPositionRule } from 'graphql';
 
 class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, CreateRecipeComponent.State> {
     constructor(props: CreateRecipeComponent.Props) {
         super(props);
         this.state = {
             submissionInProg: false,
-            creationMessage: ' '
+            creationMessage: ' ',
+            imageURI: ' ',
+            imageFormData: null
+        }
+
+        this.selectPhotos = this.selectPhotos.bind(this);
+        this.takePhotos = this.takePhotos.bind(this);
+    }
+
+    componentDidMount() {
+        this._initCameraPermission();
+    }
+
+    private async _initCameraPermission() {
+        if(Platform.OS != 'web') {
+            const {status: cameraPermissionStatus } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if(cameraPermissionStatus != "granted") {
+                alert('Camera Permission denied');
+            }
+        }
+    }
+    
+    private _processImageFileForUpload(result: ImagePicker.ImagePickerResult) {
+        // ImagePicker saves the taken photo to disk and returns a local URI to it
+        if(result.cancelled)
+            return ;
+        let localUri = result.uri;
+        let filename = localUri.split('/').pop();
+        filename = filename ? filename : ' ';
+
+        // Infer the type of the image
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
+        // Upload the image using the fetch and FormData APIs
+        let formData: any = new FormData();
+        // Assume "photo" is the name of the form field the server expects
+        formData.append('imageUrl', { uri: localUri, name: filename, type });
+
+        this.setState({imageFormData: formData, imageURI: localUri});
+    }
+
+    async selectPhotos(event: any) {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        console.log(result);
+
+        if(!result.cancelled) {
+            this._processImageFileForUpload(result);
+        }
+    }
+
+    async takePhotos(event: any) {
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        console.log(result);
+
+        if(!result.cancelled) {
+            this._processImageFileForUpload(result);
         }
     }
 
@@ -51,6 +121,7 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                 },
             ],
         };
+        const { imageURI } = this.state;
         return (
             <ThemeProvider>
                 <Formik
@@ -62,6 +133,7 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                             let finalValue: any = { ...values };
                             finalValue.imageUrl = [values.imageUrl];
                             finalValue.owner = { username: authentication.userDetails.username };
+                            console.log(this.state.imageFormData);
                             this.setState({ submissionInProg: true });
                             const createCocktail = await RecipesService().createRecipe(finalValue);
                             navigation.navigate("MyAccount");
@@ -104,10 +176,13 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                         placeholder="Image Url"
                                         onChangeText={handleChange('imageUrl')}
                                         onBlur={handleBlur('imageUrl')}
-                                        value={values.imageUrl}
+                                        value={imageURI}
+                                       
                                         multiline={true}
                                         style={styles.inputStyle}
                                     />
+                                    <ThemedButton onPress={this.selectPhotos} title="Select photo"></ThemedButton>
+                                    <ThemedButton onPress={this.takePhotos} title="Take photo"></ThemedButton>
                                     {errors.imageUrl && touched.imageUrl ? (
                                         <Text style={{ color: "#f00" }}>{errors.imageUrl}</Text>
                                     ) : null}
