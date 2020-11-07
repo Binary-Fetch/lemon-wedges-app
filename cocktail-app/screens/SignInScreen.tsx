@@ -4,6 +4,8 @@ import { Button, Image, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Yup from 'yup';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 import { authRestore, authSingIn } from '../actions/auth.action';
 import { Text, View } from "../components/Themed";
 import { useFocusEffect } from '@react-navigation/native';
@@ -28,9 +30,12 @@ function SignInScreen({
       .required('Required'),
   });
 
+  const colorScheme = useColorScheme();
+
+  const username: string = authentication.username? authentication.username:'';
   return (
     <Formik
-      initialValues={{ username: authentication.username, password: '' }}
+      initialValues={{ username: username, password: '' }}
       validationSchema={LoginFormSchema}
       onSubmit={values => {
         //console.log(values);
@@ -51,14 +56,14 @@ function SignInScreen({
                 <Icon
                   name='user'
                   size={24}
-                  color='black'
+                  color={Colors[colorScheme].text}
                 />
               }
               placeholder="User Name"
               onChangeText={handleChange('username')}
               onBlur={handleBlur('username')}
               value={values.username}
-              errorMessage={touched.username && errors.username ? 'Required' : undefined}
+              errorMessage={touched.username && errors.username ? errors.username : undefined}
             />
             <Input
               label='Password'
@@ -67,7 +72,7 @@ function SignInScreen({
                 <Icon
                   name='lock'
                   size={24}
-                  color='black'
+                  color={Colors[colorScheme].text}
                 />
               }
               placeholder="Password"
@@ -78,10 +83,6 @@ function SignInScreen({
               errorStyle={{ color: 'red' }}
               errorMessage={touched.password && errors.password ? errors.password : undefined}
             />
-            {/* {errors.password && touched.password ? (
-            <Text style={{ color: "#f00" }}>{errors.password}</Text>
-          ) : null} */}
-            {/* <ThemedButton title="Submit" onPress={(e: any) => handleSubmit(e)} /> */}
             {authentication && authentication.error &&
               <Text style={{ color: "#f00" }}>{authentication.error}</Text>
             }

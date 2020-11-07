@@ -55,7 +55,7 @@ module.exports = {
       // Do work 💪
       return { 
         name,
-        url: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Cocktail_1_bg_060702.jpg' 
+        url: 'https://www.ndtv.com/cooks/images/sangria-new.jpg' 
       }
     },
   },
