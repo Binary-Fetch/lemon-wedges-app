@@ -109,9 +109,9 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
             name: Yup.string()
                 .required('Required'),
             desc: Yup.string()
-                .required('Required'),
-            imageUrl: Yup.string()
                 .required('Required')
+            // imageUrl: Yup.string()
+            //     .required('Required')
         });
         let initialValues = {
             name: '',
@@ -201,9 +201,9 @@ class CreateRecipeScreen extends React.Component<CreateRecipeComponent.Props, Cr
                                     <View style={styles.separator}>
                                         <ThemedButton onPress={this.takePhotos} title="Take photo"></ThemedButton>
                                     </View>
-                                    {errors.imageUrl && touched.imageUrl ? (
+                                    {/* {errors.imageUrl && touched.imageUrl ? (
                                         <Text style={{ color: "#f00" }}>{errors.imageUrl}</Text>
-                                    ) : null}
+                                    ) : null} */}
                                     </View>
                                 </View>
                                 <FieldArray name="ingredients">
