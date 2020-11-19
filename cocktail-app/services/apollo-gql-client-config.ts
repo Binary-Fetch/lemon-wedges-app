@@ -4,12 +4,14 @@ import { onError } from "@apollo/client/link/error";
 import { AsyncStorage } from 'react-native';
 import Config from '../constants/Config';
 import AppConfiguration from '../constants/Config';
+import { createUploadLink } from 'apollo-upload-client';
 
 export default async function getApolloGQLClient(authRequired: boolean = true) {
     let authToken: string = authRequired ? await getauthTokenFromStorage() : "";
-    const httpLink = createHttpLink({
-        uri: AppConfiguration.GQLBackendUrl, 
-    });
+    const uploadLink = createUploadLink({ uri: AppConfiguration.GQLBackendUrl });
+    // const httpLink = createHttpLink({
+    //     uri: AppConfiguration.GQLBackendUrl, 
+    // });
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors)
         graphQLErrors.map(({ message, locations, path }) =>
@@ -36,7 +38,7 @@ export default async function getApolloGQLClient(authRequired: boolean = true) {
     link: ApolloLink.from([
       errorLink,
       authLink,
-      httpLink,
+      uploadLink,
     ]),
     cache: new InMemoryCache()
   };

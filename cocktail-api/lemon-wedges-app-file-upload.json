@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "lemon-wedges-app-8ec61",
+  "private_key_id": "a55f57a9769e15c802d66e1b3e82dff14b01c843",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDbUe2+QRnkelRP\nrn5EdJZWJHaQYySk6wWb86JA+qIYu5Nfllo6AZnhM8iC0zdxqOoAFlN0QmfebqJz\njDZpNjnQQoURCzdlLa50rWzMgilnOelX04ZIxlFYApcDwBilRIr3sbx7sJ2PMR/1\nAsXvn/rZaA4E+weygSKDnMAC8+QUU8YJbAac/9WZTdnnDHSiO7QviYL2d4vrhiQE\nJVZEW77GbbXybY2MbAgbbSBHra/4p9EQp2DcPgQw21lpr8Oi6Gi2hYbI895awZFv\n/2kuRHTDoQx2ZOoLn4r62/joLfiyMi54OavtOuOFPGDa1dzsToQHTb/HUA++Eai6\n9thiPu3NAgMBAAECggEADpJPr6mPIRdAlUe0Y3N0jpYfG4I+y8dCqOUjxVnxnZ+O\nz9XDOmHjWatRWeHTJ/XPUECrfEiyMnzaxb8N2WktJ6lXwnVikZIaqm1gUmkee5mF\nJ5zp6dllS6nmYy0m5gobCpBwQ66NFVev9h0gTgasybeIYOvVy9YZFzH5ruiJ4ZC8\nxewPnFlnmKrkShch36TwTCgwLmsf2xbTXBNEC7AqcGqoqv4XLHFSm0eDAhj2ielG\nn/37ezrChAug2EA+GWnQjw8HYDcnSIesq8oBakAyJjncx0EesH+1Aha1QAEv6WjD\nRth62efVp/VFu4HmJynYPWekGzTDby0y43yCJ52ukQKBgQD8VRKGb8rxXoXnbwuU\ng/rdVZngb1BL+cEkNFbV9DnLL4+MKh728f6ANDHnIkH83eqZtKOJIWgmioxpM4+L\nOeBC6lD2iIvlqvnSQiqa4Gk/UVjrjvyoDOIm3zHspQ82eHzfS2lpsyqZoHhgzhv+\nWoWmLQ+hqUp4Nwv6xESe1MhNcQKBgQDeggSK7SLJU9eh+2Vep3VFfo7Em2O7VrEl\nF6i/uV/ltZTbn245U3M3WcSioRvDKZDekOhnDhZGIvD6iWa1GfIHQxg23yVYHJ+f\nlHG9/RjuyBq16IP/K3GA3rKgYQUowUZilcnLaaGMU8z4On0gbcYjbyhv4MvklFD5\nmtaFcnyoHQKBgQDc3Un9ylSEuQvT62rjcDJhEdBClqxeFBpuqjFnzQHZS6QGN8gq\ntt7hMM6NVXsU7tmt+GM8YLVdJuCIJM18PAiECb0cTaDGQsWwuKG6Nrto5LdEWD/m\niIBbLfnw/Pk34HbMrKF0F5MuLTuw4De4h1t8fOy1wAyi9OvTb3/w1qcMwQKBgG81\nRnX1DWTYTba8wi5rvbYNCegDzfXM316tk363dNGHTq3x4hIuvjAU4q1xnkGNncVP\nYYhYRxOo1Q4y7C1pmUi95PVP1AdUzwbgF3UgcXyucIMogghfuyvwohB8TSrQZpBR\nUvkig0Zyf8g022MA2n3NScWY8e79nfcSx1MNJHaVAoGAU+2JjwmKvcOwo4kEXuIg\nvGMA77rjBreMhjLd8atPLO3TAhMXBJ3T+8+6Gcy3bEvORpVsvBetjmeRF9pz2y1x\nmNrNWEzk73Ld6pXXZwWtIgWLy8wz1fGbxHIsdENVedJuYQhUZc0xpewg1Gjkc+9F\nHeAO+UeCIi5X5OPGysg+TiI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-xpeso@lemon-wedges-app-8ec61.iam.gserviceaccount.com",
+  "client_id": "100839544992881573478",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-xpeso%40lemon-wedges-app-8ec61.iam.gserviceaccount.com"
+}
