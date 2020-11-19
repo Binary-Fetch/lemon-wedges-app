@@ -2,6 +2,7 @@
 The cocktail nirvana app
 
 ## Steps to run the API Application:
+- Add your firrebase app private key in lemon-wedges-app-file-upload.json
 - cd cocktail-api
 - npm install
 - npm run server
